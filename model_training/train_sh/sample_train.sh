@@ -1,0 +1,1 @@
+python ./model_training/train_model.py -mk 4 -ml 30 -tr 0.85 -bs 80 -mn gpt2_keyword

@@ -1,3 +1,6 @@
 bs4 == 0.0.1
 requests == 2.23.0
-
+transformers == 4.3.3 
+sentencepiece == 0.1.91
+janome
+pytorch_lightning
