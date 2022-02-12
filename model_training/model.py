@@ -34,9 +34,10 @@ class GPT2_Lyrics(pl.LightningModule):
         output = self.forward(input_ids, attention_mask)
         final_output, final_label = self.reshape_tensors(output, label)
 
-        loss = F.cross_entropy(final_output, final_label, ignore_index=tokenizer.pad_token_id)
-        results = {'loss':loss}
-        return loss
+        loss = F.cross_entropy(final_output, final_label, ignore_index=self.pad_token_id)
+        self.log("loss", loss)
+        tensorboard_logs = {'train_loss':loss}
+        return {'loss':loss}
     
     
     def val_dataloader(self):
@@ -46,6 +47,7 @@ class GPT2_Lyrics(pl.LightningModule):
         input_ids, attention_mask, label = batch
         output = self.forward(input_ids, attention_mask)
         final_output, final_label = self.reshape_tensors(output, label)
-        loss = F.cross_entropy(final_output, final_label, ignore_index=tokenizer.pad_token_id)
-        results = {'val_loss':loss}
-        return loss
+        loss = F.cross_entropy(final_output, final_label, ignore_index=self.pad_token_id)
+        self.log("val_loss", loss)
+        tensorboard_logs = {'val_loss':loss}
+        return {'val_loss':loss}

@@ -17,7 +17,8 @@ class UtanetDataset(Dataset):
         return len(self.data)
     
     def select_keyword(self, keywords):
-        size = np.random.randint(self.max_keyword_num)
+        max_num = np.min([len(keywords), self.max_keyword_num])
+        size = np.random.randint(max_num)
         if size != 0:
             return ','.join(np.random.choice(keywords, size=size, replace=False))
         else:
@@ -28,6 +29,6 @@ class UtanetDataset(Dataset):
         keyword = self.select_keyword(music['keyword'])
 
         input_str = keyword + '/' + music['lyric']
-        inputs = tokenizer(input_str, return_tensors='pt', max_length=self.max_length, padding="max_length", truncation=True)
+        inputs = self.tokenizer(input_str, return_tensors='pt', max_length=self.max_length, padding="max_length", truncation=True)
         return inputs['input_ids'][0][:-1], inputs['attention_mask'][0][:-1], inputs['input_ids'][0][1:]
         

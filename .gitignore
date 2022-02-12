@@ -1,3 +1,5 @@
 /memo
 /model_training/pip_list.sh
 /model_training/saved_model
+/model_training/__pycache__
+/lightning_logs
